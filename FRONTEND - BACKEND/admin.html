@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .section {
+            border: 2px solid black;
+            padding: 20px;
+            width: 750px;
+            text-align: center;
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .button-grid button {
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: #000000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h2>Admin</h2>
+        <div class="button-grid">
+            <!-- Botones CRUD -->
+
+            <button onclick="redireccionClientes()">Clientes</button>
+            <button onclick="redireccionCuentaBancaria()">Cuenta Bancaria</button>
+            <button onclick="redireccionTrabajadores()">Trabajadores</button>
+            <button onclick="redireccionRoles()">Roles</button>
+            <button onclick="redireccionPromocion()">Promoción</button>
+            <button onclick="redireccionCiudades()">Ciudades</button>
+            <button onclick="redireccionCalleDireccion()">Calle_Dirección</button>
+            <button onclick="redireccionInsumo()">Insumo</button>
+            <button onclick="redireccionProveedor()">Proveedor</button>
+            <button onclick="redireccionProductos()">Productos</button>
+            <button onclick="redireccionInventario()">Inventario</button>
+            <button onclick="redireccionPagoCliente()">Pago_Cliente</button>
+            <button onclick="redireccionPagoProveedor()">Pago_Proveedor</button>
+            <button onclick="realizarVenta()">Realizar Venta</button>
+            <button onclick="func4()">Reporte de ventas</button>
+        </div>
+        <!-- Botones FUNC debajo de CRUD -->
+        <div class="button-grid" style="margin-top: 10px;">
+            <button onclick="func1()">REPORTE VENTAS</button>
+            <button onclick="func2()">REPORTE PAGOS CLIENTE</button>
+            <button onclick="func3()">REPORTE PAGOS PROVEEDOR</button>
+            <button onclick="redireccionAplicarPromocion()">Aplicar Promoción</button>
+            <button onclick="redireccionIngresoInsumo()">Ingreso Insumo</button>
+            <button onclick="redireccionIngresoProducto()">Ingreso Producto</button>
+        </div>
+    </div>
+    <script src = "links.js"></script>
+</body>
+</html>
