@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS HospitalTalca;
 USE HospitalTalca;
 
--- 1. Tablas (Estructura)
 CREATE TABLE Pacientes (
     id_paciente INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -22,7 +21,7 @@ CREATE TABLE Biopsias (
     ON DELETE CASCADE
 );
 
--- 2. Trigger (Automatización de Fechas)
+
 DELIMITER //
 CREATE TRIGGER calcular_expiracion_biopsia
 BEFORE INSERT ON Biopsias
@@ -33,7 +32,7 @@ END;
 //
 DELIMITER ;
 
--- 3. Generador de Datos Masivos (1500 Registros con doble apellido)
+
 DELIMITER //
 CREATE PROCEDURE GenerarDatosMasivos()
 BEGIN
@@ -47,9 +46,8 @@ BEGIN
     DECLARE rand_fecha DATE;
     DECLARE last_id INT;
 
-    -- Bucle para crear 1500 registros
     WHILE i < 1500 DO
-        -- Seleccionar nombre aleatorio (Lista ampliada a 50 nombres comunes)
+
         SET rand_nombre = ELT(FLOOR(1 + (RAND() * 50)), 
             'Juan', 'María', 'Pedro', 'Ana', 'Luis', 'Carmen', 'José', 'Francisca', 
             'Diego', 'Camila', 'Jorge', 'Valentina', 'Carlos', 'Daniela', 'Manuel',
@@ -59,7 +57,6 @@ BEGIN
             'Tomás', 'Victoria', 'Alejandro', 'Beatriz', 'Héctor', 'Teresa', 'Sergio', 
             'Patricia', 'Eduardo', 'Monserrat', 'Matías', 'Estefanía', 'Nicolás', 'Alejandra');
 
-        -- Seleccionar PRIMER apellido (Lista de 35 apellidos comunes)
         SET ape1 = ELT(FLOOR(1 + (RAND() * 35)), 
             'González', 'Muñoz', 'Rojas', 'Díaz', 'Pérez', 'Soto', 'Contreras', 'Silva', 
             'Martínez', 'Sepúlveda', 'Morales', 'Rodríguez', 'López', 'Fuentes', 'Hernández', 
@@ -67,7 +64,7 @@ BEGIN
             'Reyes', 'Gutiérrez', 'Castro', 'Pizarro', 'Álvarez', 'Vásquez', 'Sánchez', 
             'Fernández', 'Ramírez', 'Carrasco', 'Gómez', 'Cortés', 'Herrera');
 
-        -- Seleccionar SEGUNDO apellido de la misma lista
+ 
         SET ape2 = ELT(FLOOR(1 + (RAND() * 35)), 
             'González', 'Muñoz', 'Rojas', 'Díaz', 'Pérez', 'Soto', 'Contreras', 'Silva', 
             'Martínez', 'Sepúlveda', 'Morales', 'Rodríguez', 'López', 'Fuentes', 'Hernández', 
@@ -75,17 +72,17 @@ BEGIN
             'Reyes', 'Gutiérrez', 'Castro', 'Pizarro', 'Álvarez', 'Vásquez', 'Sánchez', 
             'Fernández', 'Ramírez', 'Carrasco', 'Gómez', 'Cortés', 'Herrera');
 
-        -- Concatenar ambos apellidos
+    
         SET rand_apellido_completo = CONCAT(ape1, ' ', ape2);
 
-        -- Generar RUT aleatorio
+       
         SET rand_rut = CONCAT(FLOOR(5000000 + (RAND() * 20000000)), '-', FLOOR(0 + (RAND() * 9)));
         
-        -- Insertar paciente
+     
         INSERT IGNORE INTO Pacientes (nombre, apellido, rut) 
         VALUES (rand_nombre, rand_apellido_completo, rand_rut);
         
-        -- Insertar biopsia si el paciente se creó correctamente
+     
         IF ROW_COUNT() > 0 THEN
             SET last_id = LAST_INSERT_ID();
             SET rand_organo = ELT(FLOOR(1 + (RAND() * 8)), 'Hígado', 'Riñón', 'Estómago', 'Piel', 'Pulmón', 'Colon', 'Próstata', 'Tiroides');
@@ -100,9 +97,10 @@ BEGIN
 END //
 DELIMITER ;
 
--- 4. Ejecutar la generación
+
 CALL GenerarDatosMasivos();
 
--- 5. Verificar resultados
+
 SELECT COUNT(*) as Total_Pacientes FROM Pacientes;
+
 SELECT * FROM Pacientes LIMIT 10;
