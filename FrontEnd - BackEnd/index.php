@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// ==========================================
-// 1. CONEXIÓN MYSQL
-// ==========================================
+
+// CONEXIÓN MYSQL
+
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
@@ -16,9 +16,9 @@ function getDB() {
     return $conn;
 }
 
-// ==========================================
-// 2. LÓGICA DE LOGIN (DESDE BASE DE DATOS)
-// ==========================================
+
+// LÓGICA DE LOGIN (DESDE BASE DE DATOS)
+
 $error = "";
 
 // LOGIN
@@ -35,7 +35,7 @@ if (isset($_POST['login'])) {
     if ($res->num_rows > 0) {
         $row = $res->fetch_assoc();
         $_SESSION['user'] = $row['username'];
-        $_SESSION['rol']  = $row['rol']; // Guardamos 'JEFE' o 'TEC'
+        $_SESSION['rol']  = $row['rol']; 
         $_SESSION['id']   = $row['id_usuario'];
         header("Location: index.php"); 
         exit;
@@ -51,9 +51,9 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-// ==========================================
-// 3. LÓGICA DE NEGOCIO (ACCIONES)
-// ==========================================
+
+// ACCIONES
+
 $msg = ""; $msgType = "";
 if (isset($_SESSION['user'])) {
     $conn = getDB();
@@ -90,7 +90,7 @@ if (isset($_SESSION['user'])) {
         else { $msg="Error: ".$conn->error; $msgType="danger"; }
     }
 
-    // Eliminar Biopsia (SOLO SI ES JEFE)
+    // Eliminar Biopsia 
     if (isset($_POST['delete_biopsia'])) {
         if ($_SESSION['rol'] == 'JEFE') {
             $id = (int)$_POST['id_biopsia'];
